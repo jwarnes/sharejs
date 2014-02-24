@@ -1,11 +1,25 @@
 <script src="/channel/bcsocket.js"></script>
-<script src="/share/share.js"></script>
+<script src="/share/share.uncompressed.js"></script>
+<script src="/share/json.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script>
 var doc = {};
-var jdoc = {};
+sharejs.open("jsonTest", "json", function(error, docRef){
+    if(error) conosole.log(error);
 
+    doc = docRef;
+    load(doc);
+    doc.on("change", function(){
+        console.log("change detected");
+        load(doc);
+    });
+
+});
+
+var load = function(doc){
+    $("#doc").text(JSON.stringify(doc.get(), undefined, 2));
+}
 </script>
-<span id="doc">
+<pre id="doc">
 unloaded
-</span>
+</pre>
